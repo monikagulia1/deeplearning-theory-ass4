@@ -1,0 +1,66 @@
+1. How would you describe TensorFlow in a short sentence? What are its main features? Can
+you name other popular Deep Learning libraries?
+2. Is TensorFlow a drop-in replacement for NumPy? What are the main differences between
+the two?
+3. Do you get the same result with tf.range(10) and tf.constant(np.arange(10))?
+4. Can you name six other data structures available in TensorFlow, beyond regular tensors?
+5. A custom loss function can be defined by writing a function or by subclassing
+the keras.losses.Loss class. When would you use each option?
+6. Similarly, a custom metric can be defined in a function or a subclass of keras.metrics.Metric.
+When would you use each option?
+7. When should you create a custom layer versus a custom model?
+8. What are some use cases that require writing your own custom training loop?
+9. Can custom Keras components contain arbitrary Python code, or must they be convertible to
+TF Functions?
+10. What are the main rules to respect if you want a function to be convertible to a TF Function?
+11. When would you need to create a dynamic Keras model? How do you do that? Why not
+make all your models dynamic?
+
+answers-
+1. TensorFlow is an open-source deep learning library that provides a flexible framework for building and deploying machine learning models. Its main features include automatic differentiation, GPU acceleration, distributed computing support, and a wide range of pre-built neural network layers and models. Other popular deep learning libraries include PyTorch, Keras, and MXNet.
+
+2. TensorFlow is not a drop-in replacement for NumPy, although it shares some similarities. The main differences between the two are:
+   - TensorFlow is optimized for deep learning tasks and provides extensive support for defining and training neural networks, while NumPy is a general-purpose numerical computing library.
+   - TensorFlow utilizes a graph-based computational model, where operations are defined in a computational graph and executed in a separate session, enabling distributed computing and GPU acceleration. NumPy operates on arrays directly and executes operations immediately.
+   - TensorFlow supports automatic differentiation for computing gradients, which is essential for training neural networks. NumPy does not have built-in automatic differentiation capabilities.
+
+3. No, you do not get the same result with `tf.range(10)` and `tf.constant(np.arange(10))`. While both operations create tensors with the same values, the data types of the resulting tensors are different. `tf.range(10)` creates an integer tensor, whereas `tf.constant(np.arange(10))` creates a float tensor since NumPy's default data type is float.
+
+4. Beyond regular tensors, some other data structures available in TensorFlow are:
+   - Sparse Tensors: Efficient representation of tensors with a large number of zero values.
+   - Ragged Tensors: Tensors with varying lengths along one or more dimensions, suitable for representing sequences or nested data.
+   - TensorArrays: TensorFlow's version of dynamic arrays, which can be used to store and manipulate tensors dynamically during graph execution.
+   - Dataset API: A data input pipeline that provides an abstraction for handling large datasets efficiently, including operations like batching, shuffling, and prefetching.
+   - Variables: Special tensors that persist and can be modified during the execution of a TensorFlow program, commonly used for storing and updating model parameters.
+   - Queue-based structures: TensorFlow provides various queue implementations for managing data input and output in a multi-threaded or distributed environment.
+
+5. When defining a custom loss function, writing a function or subclassing the `keras.losses.Loss` class can be used:
+   - Writing a function: Use this option when the loss calculation does not require any internal state or trainable parameters. It is simpler and suitable for most cases.
+   - Subclassing `keras.losses.Loss`: Use this option when the loss calculation involves complex logic or requires maintaining internal state or trainable parameters. Subclassing allows more flexibility and customization.
+
+6. Similar to custom loss functions, defining a custom metric can be done in a function or by subclassing `keras.metrics.Metric`:
+   - Function: Use this option when the metric calculation can be expressed as a single function without any internal state or trainable parameters.
+   - Subclassing `keras.metrics.Metric`: Use this option when the metric calculation requires maintaining internal state or trainable parameters, or involves more complex logic such as tracking additional metrics during training.
+
+7. Create a custom layer when you want to define a reusable module that performs a specific computation. Custom layers can be combined with other layers to build custom architectures or add unique functionality to existing models. Create a custom model when you want to define a unique architecture that includes specific combinations of layers or when you need to implement custom training loops or evaluation routines.
+
+8. Some use cases that require writing a custom training loop include:
+   - Implementing advanced training algorithms or custom loss functions that are not easily expressible using the built-in training routines of frameworks like Keras.
+   - Incorporating additional metrics or monitoring during training that are not provided by default.
+   - Handling complex data handling or preprocessing operations that cannot be easily achieved with the standard data input pipeline.
+   - Implementing specialized training procedures for specific applications, such as reinforcement learning algorithms or generative adversarial networks (GANs).
+
+9. Custom Keras components must be convertible to TensorFlow Functions.
+TensorFlow Functions are a way of optimizing and accelerating computations by converting Python code into a TensorFlow graph representation. While arbitrary Python code can be used within custom Keras components, it is essential to ensure that the core computations and operations used within the components are compatible with TensorFlow's graph execution and can be converted into TensorFlow Functions.
+
+10. To ensure a function is convertible to a TensorFlow Function, the following rules should be respected:
+   - Use TensorFlow operations (ops) and functions for all computations.
+   - Avoid using Python control flow statements (e.g., if, for, while) unless wrapped in TensorFlow control flow operations (e.g., `tf.cond`, `tf.while_loop`).
+   - Avoid using Python native data structures (e.g., lists, dictionaries) within the TensorFlow function.
+   - Ensure all tensors used within the function are TensorFlow tensors, not Python scalars or NumPy arrays.
+   - Avoid using Python side effects or non-deterministic operations.
+
+11. You would need to create a dynamic Keras model when the model's architecture or behavior needs to change dynamically based on input data or other factors. 
+Dynamic models are useful in scenarios such as reinforcement learning, where the structure of the model can vary between episodes. 
+To create a dynamic Keras model, you can use the Functional API or subclass the `keras.Model` class and override the `call` method to define the forward pass.
+Not all models need to be dynamic because static models provide optimizations and performance benefits when the architecture does not change during training or inference.
